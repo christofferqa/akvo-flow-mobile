@@ -46,7 +46,7 @@ public class PropertyUtil {
             properties = new Properties();
             try {
                 InputStream rawResource = resources
-                        .openRawResource(R.raw.survey);
+                        .openRawResource(R.raw.testsurvey); // CQA: was R.raw.survey
                 properties.load(rawResource);
             } catch (Exception e) {
                 Log.e(TAG, "Coult not load properties", e);

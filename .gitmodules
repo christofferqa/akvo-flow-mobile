@@ -1,0 +1,3 @@
+[submodule "survey_test/src/android"]
+	path = survey_test/src/android
+	url = https://github.com/algobardo/android.testR2E.git
