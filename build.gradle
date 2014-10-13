@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
+        classpath 'com.crashlytics.examples.gradle:preprocessor:1.0.0'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'android-sdk-manager'
+apply plugin: 'com.android.application'
+apply plugin: 'preprocessor'
+
+dependencies {
+    compile fileTree(dir: 'survey/libs', include: '*.jar')
+    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+}
+
+android {
+    compileSdkVersion "Google Inc.:Google APIs:19"
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 19
+        applicationId "com.gallatinsystems.survey.device"
+        testApplicationId "com.jayway.test"
+        testInstrumentationRunner 'com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner'
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+
+    buildTypes {
+
+        // Enable code coverage
+
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'survey/AndroidManifest.xml'
+            java.srcDirs = ['survey/src']
+            resources.srcDirs = ['survey/src']
+            aidl.srcDirs = ['survey/src']
+            renderscript.srcDirs = ['survey/src']
+            res.srcDirs = ['survey/res']
+            assets.srcDirs = ['survey/assets']
+        }
+
+        androidTest {
+            java.srcDirs = ['syrvey_test/src']
+            resources.srcDirs = ['syrvey_test/src']
+            aidl.srcDirs = ['syrvey_test/src']
+            renderscript.srcDirs = ['syrvey_test/src']
+            res.srcDirs = ['syrvey_test/res']
+            assets.srcDirs = ['syrvey_test/assets']
+        }
+    }
+}
+
+/*********************/
+/*** CODE COVERAGE ***/
+/*********************/
+
+allprojects {
+    
+    // Avoid VerifyError
+    
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.5
+        targetCompatibility = 1.5
+    }
+}
+
+task jacoco(dependsOn: "createDebugCoverageReport") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+}

@@ -25,4 +25,5 @@ survey/res/raw/survey.properties
 survey_test/bin
 survey_test/gen
 survey_test/src/com/jayway/test/SurveyDataTest.java
-
+build/
+local.properties
